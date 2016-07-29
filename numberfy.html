@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Number-fy</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script type="text/javascript">
+      $(document).on('ready', function() {
+        // revealing module pattern
+        var letterMapper = (function() {
+          // private data variables
+          var map = {
+            "A": 2,
+            "B": 2,
+            "C": 2,
+            "D": 3,
+            "E": 3,
+            "F": 3,
+            "G": 4,
+            "H": 4,
+            "I": 4,
+            "J": 5,
+            "K": 5,
+            "L": 5,
+            "M": 6,
+            "N": 6,
+            "O": 6,
+            "P": 7,
+            "Q": 7,
+            "R": 7,
+            "S": 7,
+            "T": 8,
+            "U": 8,
+            "V": 8,
+            "W": 9,
+            "X": 9,
+            "Y": 9,
+            "Z": 9
+          };
+
+          function isLetter(c) {
+            return /([A-Za-z])/.test(c);
+          }
+
+          function translate(phone_number) {
+            var translated = "";
+
+            for(var i = 0; i < phone_number.length; i++) {
+              var c = phone_number[i];
+              if (isLetter(c)) {
+                c = map[c.toUpperCase()];
+              }
+
+              translated += c;
+            }
+
+            return translated;
+          }
+
+          return {
+            translate: translate
+          };
+        }());
+
+        $('button').on('click', function() {
+          var input = $('input')[0];
+          var number = input.value;
+          console.log(number);
+          var trans = letterMapper.translate(number);
+          input.value = trans;
+        })
+      })
+    </script>
+    <style media="screen">
+      @import url(https://fonts.googleapis.com/css?family=Roboto:400,300,700,100);
+
+      body {
+        width: 100%;
+        background-color: rgba(226, 226, 226, 0.85);
+        font-family: Roboto, sans-serif;
+      }
+      .center {
+        width: 300px;
+        padding-top: 3em;
+        margin: auto;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="center">
+      <h1>Number-fy</h1>
+      <input type="field" name="name" value="" placeholder="1-800-FLOWERS">
+      <button type="button" name="translate">Translate</button>
+      <p>
+        Phone keypad letters have been used, mainly in the United States, as a way
+        of remembering telephone numbers easily. For example, an interior
+        decorator might license the phone number 1-800-724-6837 but advertise
+        it as the more memorable phoneword 1-800-PAINTER.
+        <a href="https://en.wikipedia.org/wiki/Telephone_keypad">WIKIPEDIA</a>
+      </p>
+    </div>
+  </body>
+</html>
